@@ -1,0 +1,23 @@
+{
+  "name": "cdx",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "node --loader=import-jsx --no-warnings ./src/index.js"
+  },
+  "dependencies": {
+    "collections": "^5.1.13",
+    "import-jsx": "^5.0.0",
+    "ink": "^4.2.0",
+    "ink-text-input": "^5.0.1",
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.22.5",
+    "@babel/core": "^7.22.5",
+    "@babel/preset-env": "^7.22.5",
+    "@babel/preset-react": "^7.22.5"
+  }
+}
