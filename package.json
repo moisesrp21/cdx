@@ -12,12 +12,12 @@
     "import-jsx": "^5.0.0",
     "ink": "^4.2.0",
     "ink-text-input": "^5.0.1",
-    "react": "^18.2.0"
+    "react": "^18.2.0",
+    "terminal-kit": "^3.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.22.5",
     "@babel/core": "^7.22.5",
-    "@babel/preset-env": "^7.22.5",
-    "@babel/preset-react": "^7.22.5"
+    "@babel/preset-env": "^7.22.5"
   }
 }

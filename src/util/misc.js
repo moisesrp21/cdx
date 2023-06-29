@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { Text, useInput } from 'ink';
+import { Text, useInput, useStdout } from 'ink';
 import path from 'path';
 import File from '../File.js';
 
@@ -28,8 +28,8 @@ export function findFiles(dir, setFiles) {
     }
     return tmp.length;
 }
-export function getFiles(dir, setFiles, setQueue, consoleHeight, top, bottom) {
-    new Promise((resolve, reject) => {
+export function getFiles(dir) {
+    return new Promise((resolve, reject) => {
         fs.readdir(dir, (error, files) => {
             if (error) {
                 reject(error);
@@ -55,27 +55,29 @@ export function getFiles(dir, setFiles, setQueue, consoleHeight, top, bottom) {
                 .then((fileData) => resolve(fileData))
                 .catch((error) => reject(error));
         });
-    }).then((files) => {
-        setFiles(files);
-        let size = Math.min(files.length, consoleHeight);
-        setQueue(files.slice(0, size));
-        top.current = 0;
-        bottom.current = size;
     });
 }
-export function manageInput(p, file, setFile, size, length, check) {
+export function manageInput(p, file, queue, setFile, length, check) {
     useInput((input, key) => {
         switch (input) {
             case 'k':
-                if (file > 0) {
-                    setFile(file - 1);
+                if (file.x > 0) {
+                    setFile({
+                        x: file.x - 1,
+                        name: queue[file.x - 1]?.name,
+                        type: queue[file.x - 1]?.type,
+                    });
                 }
                 if (p.current > 0) p.current--;
                 check();
                 break;
             case 'j':
-                if (file < size - 1) {
-                    setFile(file + 1);
+                if (file.x < queue.length - 1) {
+                    setFile({
+                        x: file.x + 1,
+                        name: queue[file.x + 1]?.name,
+                        type: queue[file.x + 1]?.type,
+                    });
                 }
                 if (p.current < length - 1) p.current++;
                 check();
@@ -110,7 +112,7 @@ export function display(queue, file, dmsn) {
         tmp.push(
             <File
                 key={i}
-                pointed={file == i}
+                pointed={file.x == i}
                 name={queue[i].name}
                 type={queue[i].type}
                 dmsn={dmsn}
